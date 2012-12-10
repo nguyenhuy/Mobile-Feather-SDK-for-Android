@@ -584,9 +584,11 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 
 		/** the current brush radius size */
 		float mRadius = 10;
+		int mBitmapWidth;
 
 		public void setRadius( float radius, int bitmapWidth ) {
 			mRadius = radius;
+			mBitmapWidth = bitmapWidth;
 		}
 
 		public void moveTo( float values[] ) {
@@ -598,6 +600,10 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 		}
 
 		public void quadTo( float values[] ) {
+		    if (mCurrentFilter == null) {
+		        pathStart( mRadius, mBitmapWidth );
+		    }
+		    
 			mCurrentFilter.quadTo( values );
 		}
 
