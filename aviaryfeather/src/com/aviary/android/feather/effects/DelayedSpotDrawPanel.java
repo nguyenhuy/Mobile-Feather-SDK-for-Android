@@ -601,8 +601,7 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 
 		public void quadTo( float values[] ) {
 		    if (mCurrentFilter == null) {
-		        mCurrentFilter = (SpotBrushFilter) createFilter();
-		        mCurrentFilter.setRadius( mRadius, mBitmapWidth );
+		        pathStart( mRadius, mBitmapWidth );
 		    }
 		    
 			mCurrentFilter.quadTo( values );
