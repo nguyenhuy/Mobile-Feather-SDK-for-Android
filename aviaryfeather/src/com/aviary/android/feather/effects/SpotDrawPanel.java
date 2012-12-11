@@ -302,7 +302,7 @@ public class SpotDrawPanel extends AbstractContentPanel implements OnDrawListene
 	 */
 	@Override
 	public void onDeactivate() {
-		( (ImageViewSpotDraw) mImageView ).setOnDrawStartListener( null );
+	    if (mImageView != null) ( (ImageViewSpotDraw) mImageView ).setOnDrawStartListener( null );
 
 		if ( mBackgroundDrawThread != null ) {
 			if ( mBackgroundDrawThread.isAlive() ) {
@@ -325,8 +325,8 @@ public class SpotDrawPanel extends AbstractContentPanel implements OnDrawListene
 	public void onDestroy() {
 		super.onDestroy();
 		mBackgroundDrawThread = null;
-		mImageView.clear();
-		mToast.hide();
+		if (mImageView != null) mImageView.clear();
+		if (mToast != null) mToast.hide();
 	}
 
 	/*

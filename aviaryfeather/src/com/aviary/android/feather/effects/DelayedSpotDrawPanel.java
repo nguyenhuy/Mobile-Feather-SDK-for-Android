@@ -308,7 +308,7 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 	 */
 	@Override
 	public void onDeactivate() {
-		( (ImageViewSpotDraw) mImageView ).setOnDrawStartListener( null );
+	    if (mImageView != null) ( (ImageViewSpotDraw) mImageView ).setOnDrawStartListener( null );
 
 		if ( mBackgroundDrawThread != null ) {
 			mBackgroundDrawThread.mQueue.clear();
@@ -337,8 +337,8 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 	public void onDestroy() {
 		super.onDestroy();
 		mBackgroundDrawThread = null;
-		mImageView.clear();
-		mToast.hide();
+		if (mImageView != null) mImageView.clear();
+		if (mToast != null) mToast.hide();
 	}
 
 	/*
