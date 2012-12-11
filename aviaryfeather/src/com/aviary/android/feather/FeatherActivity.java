@@ -438,7 +438,11 @@ public class FeatherActivity extends MonitoredActivity implements OnToolbarClick
 	protected void onInitializeUtils() {
 		UIUtils.init( this );
 		Constants.init( this );
-		NativeFilterProxy.init( this, null );
+		try {
+            NativeFilterProxy.init( this, null );
+        } catch (ExceptionInInitializerError e) {
+        } catch (UnsatisfiedLinkError e) {
+        }
 	}
 
 	/*
