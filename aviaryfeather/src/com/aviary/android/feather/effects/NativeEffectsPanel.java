@@ -1776,7 +1776,10 @@ public class NativeEffectsPanel extends AbstractContentPanel implements ViewFact
 		@Override
 		protected FeatherPack[] doInBackground( Void... params ) {
 
-			PluginService service = getContext().getService( PluginService.class );
+			PluginService service = null;
+			if (getContext() != null) {
+			    service = getContext().getService( PluginService.class );
+			}
 			if ( null != service ) {
 				while ( !service.isUpdated() ) {
 					try {
