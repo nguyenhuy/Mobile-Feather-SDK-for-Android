@@ -634,67 +634,65 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 					continue;
 				}
 
-				int currentSize;
-
-				currentSize = queueSize();
-
-				if ( currentSize > 0 && !isInterrupted() ) {
+				if ( !isInterrupted() ) {
 
 					if ( !s ) {
 						s = true;
 						onProgressStart();
 					}
 
-					PointF firstPoint, lastPoint;
+					if (queueSize() > 0) {
+					    PointF firstPoint, lastPoint;
+					    
+					    SpotBrushFilter filter = mQueue.peek();
+	                    FlattenPath path = filter.getFlattenPath();
 
-					SpotBrushFilter filter = mQueue.peek();
-					FlattenPath path = filter.getFlattenPath();
+	                    firstPoint = path.remove();
+	                    while ( firstPoint == null && path.size() > 0 ) {
+	                        firstPoint = path.remove();
+	                    }
 
-					firstPoint = path.remove();
-					while ( firstPoint == null && path.size() > 0 ) {
-						firstPoint = path.remove();
+	                    final int w = mPreview.getWidth();
+	                    final int h = mPreview.getHeight();
+
+	                    while ( path.size() > 0 ) {
+	                        lastPoint = path.remove();
+
+	                        float x = Math.abs( firstPoint.x - lastPoint.x );
+	                        float y = Math.abs( firstPoint.y - lastPoint.y );
+	                        float length = FloatMath.sqrt( x * x + y * y );
+	                        float currentPosition = 0;
+	                        float lerp;
+
+	                        if ( length == 0 ) {
+	                            filter.addPoint( firstPoint.x / w, firstPoint.y / h );
+	                        } else {
+	                            while ( currentPosition < length ) {
+	                                lerp = currentPosition / length;
+	                                PointF point = getLerp( lastPoint, firstPoint, lerp );
+	                                currentPosition += filter.getRealRadius();
+	                                filter.addPoint( point.x / w, point.y / h );
+	                            }
+	                        }
+	                        firstPoint = lastPoint;
+	                    }
+
+	                    filter.draw( mPreview );
+	                    if ( paused ) continue;
+
+	                    if ( SystemUtils.isHoneyComb() ) {
+	                        // There's a bug in Honeycomb which prevent the bitmap to be updated on a glcanvas
+	                        // so we need to force it
+	                        Moa.notifyPixelsChanged( mPreview );
+	                    }
+
+	                    try {
+	                        mActions.add( (MoaAction) filter.getActions().get( 0 ).clone() );
+	                    } catch ( CloneNotSupportedException e ) {}
+
+	                    mQueue.remove();
+	                    mImageView.postInvalidate();
 					}
-
-					final int w = mPreview.getWidth();
-					final int h = mPreview.getHeight();
-
-					while ( path.size() > 0 ) {
-						lastPoint = path.remove();
-
-						float x = Math.abs( firstPoint.x - lastPoint.x );
-						float y = Math.abs( firstPoint.y - lastPoint.y );
-						float length = FloatMath.sqrt( x * x + y * y );
-						float currentPosition = 0;
-						float lerp;
-
-						if ( length == 0 ) {
-							filter.addPoint( firstPoint.x / w, firstPoint.y / h );
-						} else {
-							while ( currentPosition < length ) {
-								lerp = currentPosition / length;
-								PointF point = getLerp( lastPoint, firstPoint, lerp );
-								currentPosition += filter.getRealRadius();
-								filter.addPoint( point.x / w, point.y / h );
-							}
-						}
-						firstPoint = lastPoint;
-					}
-
-					filter.draw( mPreview );
-					if ( paused ) continue;
-
-					if ( SystemUtils.isHoneyComb() ) {
-						// There's a bug in Honeycomb which prevent the bitmap to be updated on a glcanvas
-						// so we need to force it
-						Moa.notifyPixelsChanged( mPreview );
-					}
-
-					try {
-						mActions.add( (MoaAction) filter.getActions().get( 0 ).clone() );
-					} catch ( CloneNotSupportedException e ) {}
-
-					mQueue.remove();
-					mImageView.postInvalidate();
 				} else {
 					if ( s ) {
 						onProgressEnd();
