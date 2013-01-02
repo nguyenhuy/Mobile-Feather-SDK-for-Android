@@ -505,8 +505,8 @@ public class DrawingPanel extends AbstractContentPanel implements OnDrawStartLis
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		mImageView.clear();
-		mToast.hide();
+		if (mImageView != null) mImageView.clear();
+		if (mToast != null) mToast.hide();
 	}
 
 	/**
