@@ -887,9 +887,9 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 		protected void onPostExecute( Void result ) {
 			super.onPostExecute( result );
 
-			if ( getContext().getBaseActivity().isFinishing() ) return;
+			if ( getContext().getBaseActivity() != null && getContext().getBaseActivity().isFinishing() ) return;
 
-			if ( mProgress.isShowing() ) {
+			if ( mProgress != null && mProgress.isShowing() ) {
 				try {
 					mProgress.dismiss();
 				} catch ( IllegalArgumentException e ) {}
