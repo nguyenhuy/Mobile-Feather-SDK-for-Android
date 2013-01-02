@@ -1495,20 +1495,21 @@ public class NativeEffectsPanel extends AbstractContentPanel implements ViewFact
 	 * Firt animation when panel is loaded and it's ready to display the effects packs.
 	 */
 	private void startFirstAnimation() {
-		getHandler().postDelayed( new Runnable() {
-
-			@Override
-			public void run() {
-				postStartFirstAnimation();
-			}
-		}, 200 );
-		return;
+	    if (isActive()) {
+	        getHandler().postDelayed( new Runnable() {
+	            
+	            @Override
+	            public void run() {
+	                postStartFirstAnimation();
+	            }
+	        }, 200 );
+	    }
 	}
 
 	private void postStartFirstAnimation() {
 		mIsAnimating = true;
 
-		if ( mWorkspace.getChildCount() < 1 ) {
+		if ( mWorkspace.getChildCount() < 1 && isActive() ) {
 			getHandler().postDelayed( new Runnable() {
 
 				@Override
