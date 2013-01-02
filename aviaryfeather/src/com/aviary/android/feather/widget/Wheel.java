@@ -546,9 +546,6 @@ public class Wheel extends View implements OnGestureListener, FlingRunnableView,
 						switch ( msg.what ) {
 							case MSG_VIBRATE:
 								try {
-								    if (mVibrator == null) {
-								        mVibrator = (Vibrator) getContext().getSystemService( Context.VIBRATOR_SERVICE );
-								    }
 									mVibrator.vibrate( 10 );
 								} catch ( SecurityException e ) {
 									// missing VIBRATE permission
