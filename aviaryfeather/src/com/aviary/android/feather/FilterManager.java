@@ -1,9 +1,11 @@
 package com.aviary.android.feather;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
+
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.concurrent.Future;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
+
 import com.aviary.android.feather.effects.AbstractEffectPanel;
 import com.aviary.android.feather.effects.AbstractEffectPanel.ContentPanel;
 import com.aviary.android.feather.effects.AbstractEffectPanel.OnApplyResultListener;
@@ -1274,7 +1277,11 @@ public final class FilterManager implements OnPreviewListener, OnApplyResultList
 		public void run() {
 			PluginService pluginService = getService( PluginService.class );
 			if ( null != pluginService ) {
-				pluginService.updateExternalPackages( mResult );
+				try {
+                    pluginService.updateExternalPackages( mResult );
+                } catch (NullPointerException e) {
+                    // PluginService.updateExternalPackages throws NullPointerException but its code can't be modify
+                }
 			}
 		}
 	}
