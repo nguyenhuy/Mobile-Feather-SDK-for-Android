@@ -217,7 +217,7 @@ public class BottombarViewFlipper extends ViewFlipper {
 		height = getContent().getMeasuredHeight();
 
 		if ( height == 0 ) {
-			getHandler().post( new Runnable() {
+			post( new Runnable() {
 
 				@Override
 				public void run() {
