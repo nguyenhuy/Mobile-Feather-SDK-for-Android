@@ -17,6 +17,7 @@ import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
+import android.location.Criteria;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
@@ -548,6 +549,8 @@ public class Wheel extends View implements OnGestureListener, FlingRunnableView,
 									mVibrator.vibrate( 10 );
 								} catch ( SecurityException e ) {
 									// missing VIBRATE permission
+								} catch (NullPointerException e) {
+								    // Vibrator.vibrate can thrown NullPointerException
 								}
 						}
 					}
