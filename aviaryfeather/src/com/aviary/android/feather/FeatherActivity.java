@@ -1813,7 +1813,11 @@ public class FeatherActivity extends MonitoredActivity implements OnToolbarClick
 						
 						@Override
 						public void run() {
-							if ( mWorkspace.isEnabled() ) mFilterManager.activateEffect( (EffectEntry) holder.image.getTag() );
+							if ( mWorkspace != null && mWorkspace.isEnabled() ) {
+							    if (mFilterManager != null && holder.image.getTag() != null) {
+							        mFilterManager.activateEffect( (EffectEntry) holder.image.getTag() );
+							    }
+							}
 						}
 					}, TOOLS_OPEN_DELAY_TIME );
 				}
