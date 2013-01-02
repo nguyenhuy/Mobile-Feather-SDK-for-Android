@@ -527,7 +527,7 @@ public class TextPanel extends AbstractContentPanel implements OnDrawableEventLi
 	 */
 	@Override
 	public void onDeactivate() {
-		( (ImageViewDrawableOverlay) mImageView ).setOnDrawableEventListener( null );
+		if (mImageView != null) ( (ImageViewDrawableOverlay) mImageView ).setOnDrawableEventListener( null );
 		endEdit( null );
 		super.onDeactivate();
 	}

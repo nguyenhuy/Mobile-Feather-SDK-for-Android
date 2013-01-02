@@ -277,7 +277,7 @@ public class StickersPanel extends AbstractContentPanel implements OnUpdateListe
 			mPluginService.removeOnUpdateListener( this );
 		}
 
-		( (ImageViewDrawableOverlay) mImageView ).setDropTargetListener( null );
+		if (mImageView != null) ( (ImageViewDrawableOverlay) mImageView ).setDropTargetListener( null );
 
 		if ( null != getDragController() ) {
 			getDragController().deactivate();

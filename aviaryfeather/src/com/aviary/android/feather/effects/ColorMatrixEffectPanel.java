@@ -134,7 +134,7 @@ public class ColorMatrixEffectPanel extends AbstractOptionPanel implements OnScr
 		getOptionView().setOnTouchListener( null );
 
 		super.onDeactivate();
-		mWheel.setOnScrollListener( null );
+		if (mWheel != null) mWheel.setOnScrollListener( null );
 	}
 
 	/*
