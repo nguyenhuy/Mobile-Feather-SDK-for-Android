@@ -699,7 +699,9 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 						mActions.add( (MoaAction) filter.getActions().get( 0 ).clone() );
 					} catch ( CloneNotSupportedException e ) {}
 
-					mQueue.remove();
+					if (queueSize() > 0) {
+					    mQueue.remove();
+					}
 					mImageView.postInvalidate();
 				} else {
 					if ( s ) {
