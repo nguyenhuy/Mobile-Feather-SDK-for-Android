@@ -1281,6 +1281,8 @@ public final class FilterManager implements OnPreviewListener, OnApplyResultList
                     pluginService.updateExternalPackages( mResult );
                 } catch (NullPointerException e) {
                     // PluginService.updateExternalPackages throws NullPointerException but its code can't be modify
+                } catch (NoClassDefFoundError error) {
+                 // PluginService.updateExternalPackages throws NoClassDefFoundError but its code can't be modify
                 }
 			}
 		}
