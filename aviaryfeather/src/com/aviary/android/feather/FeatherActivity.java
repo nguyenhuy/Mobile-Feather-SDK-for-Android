@@ -332,7 +332,13 @@ public class FeatherActivity extends MonitoredActivity implements OnToolbarClick
 						break;
 
 					case FilterManager.STATE_READY:
-						parent.mToolbar.setTitle( parent.mFilterManager.getCurrentEffect().labelResourceId, false );
+					    FilterManager filterManager = parent.mFilterManager;
+					    if (filterManager != null) {
+					        EffectEntry currentEffect = filterManager.getCurrentEffect();
+					        if (currentEffect != null) {
+					            parent.mToolbar.setTitle( currentEffect.labelResourceId, false );
+					        }
+					    }
 						parent.mToolbar.setState( ToolbarView.STATE.STATE_APPLY, false );
 						break;
 				}
