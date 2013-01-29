@@ -2,6 +2,14 @@
 
 Subscribe to updates: [RSS](https://github.com/AviaryInc/Mobile-Feather-SDK-for-Android/commits/master.atom) | [Twitter](http://twitter.com/aviarychangelog)
 
+## Version 2.2.1 - January 21, 2013
+* Overhauled Effects and Stickers tools with completely redesigned UI
+* Updated default effects: effects are now more subtle and generally usable, based on your feedback
+* Added brand new Frames Tool
+* Added support for x86
+* **IMPORTANT**: Changed the way the SDK is passed the API-KEY (please read README.md for more information)
+* Fixed a bug that was affecting the Orientation tool
+
 ## Version 2.1.91 - October, 2012
 * Fixed stickers pack support for paid encrypted apps
 * Fixed bug in orientation tool when rotating 90 and straightening
