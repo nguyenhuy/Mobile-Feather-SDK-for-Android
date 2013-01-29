@@ -259,8 +259,10 @@ public class CropPanel extends AbstractContentPanel {
 	 */
 	@Override
 	public void onDestroy() {
-		mImageView.clear();
-		( (CropImageView) mImageView ).setOnHighlightSingleTapUpConfirmedListener( null );
+	    if (mImageView != null) {
+	        mImageView.clear();
+	        ( (CropImageView) mImageView ).setOnHighlightSingleTapUpConfirmedListener( null );
+	    }
 		super.onDestroy();
 	}
 

@@ -442,9 +442,10 @@ public class FeatherActivity extends MonitoredActivity implements OnToolbarClick
 	protected void onInitializeUtils() {
 		UIUtils.init( this );
 		Constants.init( this );
-		
+
 		final String api_key = getApiKey();
-		
+
+
 		JNIInitError result = NativeFilterProxy.init( this, null, api_key );
 		
 		if( result != JNIInitError.NoError ) {
@@ -1849,7 +1850,11 @@ public class FeatherActivity extends MonitoredActivity implements OnToolbarClick
 						
 						@Override
 						public void run() {
-							if ( mWorkspace.isEnabled() ) mFilterManager.activateEffect( (EffectEntry) holder.image.getTag() );
+							if ( mWorkspace != null && mWorkspace.isEnabled() ) {
+							    if (mFilterManager != null && holder.image.getTag() != null) {
+							        mFilterManager.activateEffect( (EffectEntry) holder.image.getTag() );
+							    }
+							}
 						}
 					}, TOOLS_OPEN_DELAY_TIME );
 				}

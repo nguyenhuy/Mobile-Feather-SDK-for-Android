@@ -308,7 +308,7 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 	 */
 	@Override
 	public void onDeactivate() {
-		( (ImageViewSpotDraw) mImageView ).setOnDrawStartListener( null );
+	    if (mImageView != null) ( (ImageViewSpotDraw) mImageView ).setOnDrawStartListener( null );
 
 		if ( mBackgroundDrawThread != null ) {
 			mBackgroundDrawThread.mQueue.clear();
@@ -337,8 +337,8 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 	public void onDestroy() {
 		super.onDestroy();
 		mBackgroundDrawThread = null;
-		mImageView.clear();
-		mToast.hide();
+		if (mImageView != null) mImageView.clear();
+		if (mToast != null) mToast.hide();
 	}
 
 	/*
@@ -584,9 +584,11 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 
 		/** the current brush radius size */
 		float mRadius = 10;
+		int mBitmapWidth;
 
 		public void setRadius( float radius, int bitmapWidth ) {
 			mRadius = radius;
+			mBitmapWidth = bitmapWidth;
 		}
 
 		public void moveTo( float values[] ) {
@@ -598,6 +600,10 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 		}
 
 		public void quadTo( float values[] ) {
+		    if (mCurrentFilter == null) {
+		        pathStart( mRadius, mBitmapWidth );
+		    }
+		    
 			mCurrentFilter.quadTo( values );
 		}
 
@@ -642,6 +648,12 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 					PointF firstPoint, lastPoint;
 
 					SpotBrushFilter filter = mQueue.peek();
+                    if (filter == null) {
+                        // The queue can return null when it's empty, after being
+                        // modified, probably from another thread.
+                        // We can just continue here. In the next loop, currentSize should be 0.
+                        continue;
+                    }
 					FlattenPath path = filter.getFlattenPath();
 
 					firstPoint = path.remove();
@@ -687,7 +699,9 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 						mActions.add( (MoaAction) filter.getActions().get( 0 ).clone() );
 					} catch ( CloneNotSupportedException e ) {}
 
-					mQueue.remove();
+					if (queueSize() > 0) {
+					    mQueue.remove();
+					}
 					mImageView.postInvalidate();
 				} else {
 					if ( s ) {
@@ -881,9 +895,9 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 		protected void onPostExecute( Void result ) {
 			super.onPostExecute( result );
 
-			if ( getContext().getBaseActivity().isFinishing() ) return;
+			if ( getContext().getBaseActivity() != null && getContext().getBaseActivity().isFinishing() ) return;
 
-			if ( mProgress.isShowing() ) {
+			if ( mProgress != null && mProgress.isShowing() ) {
 				try {
 					mProgress.dismiss();
 				} catch ( IllegalArgumentException e ) {}

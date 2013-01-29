@@ -505,8 +505,8 @@ public class DrawingPanel extends AbstractContentPanel implements OnDrawStartLis
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		mImageView.clear();
-		mToast.hide();
+		if (mImageView != null) mImageView.clear();
+		if (mToast != null) mToast.hide();
 	}
 
 	/**
@@ -866,24 +866,32 @@ public class DrawingPanel extends AbstractContentPanel implements OnDrawStartLis
 
 	@Override
 	public void onMoveTo( float x, float y ) {
-		mCurrentOperation.addCommand( new MoaGraphicsCommandParameter( MoaGraphicsCommandParameter.COMMAND_MOVETO, x / mWidth, y
-				/ mHeight ) );
+	    if (mCurrentOperation != null) {
+	        mCurrentOperation.addCommand( new MoaGraphicsCommandParameter( MoaGraphicsCommandParameter.COMMAND_MOVETO, x / mWidth, y
+	                / mHeight ) );
+	    }
 	}
 
 	@Override
 	public void onLineTo( float x, float y ) {
-		mCurrentOperation.addCommand( new MoaGraphicsCommandParameter( MoaGraphicsCommandParameter.COMMAND_LINETO, x / mWidth, y
-				/ mHeight ) );
+	    if (mCurrentOperation != null) {
+	        mCurrentOperation.addCommand( new MoaGraphicsCommandParameter( MoaGraphicsCommandParameter.COMMAND_LINETO, x / mWidth, y
+	                / mHeight ) );
+	    }
 	}
 
 	@Override
 	public void onQuadTo( float x, float y, float x1, float y1 ) {
-		mCurrentOperation.addCommand( new MoaGraphicsCommandParameter( MoaGraphicsCommandParameter.COMMAND_QUADTO, x / mWidth, y
-				/ mHeight, x1 / mWidth, y1 / mHeight ) );
+	    if (mCurrentOperation != null) {
+	        mCurrentOperation.addCommand( new MoaGraphicsCommandParameter( MoaGraphicsCommandParameter.COMMAND_QUADTO, x / mWidth, y
+	                / mHeight, x1 / mWidth, y1 / mHeight ) );
+	    }
 	}
 
 	@Override
 	public void onEnd() {
-		mOperations.add( mCurrentOperation );
+	    if (mCurrentOperation != null) {
+	        mOperations.add( mCurrentOperation );
+	    }
 	}
 }

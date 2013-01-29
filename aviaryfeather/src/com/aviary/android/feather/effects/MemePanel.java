@@ -170,13 +170,15 @@ public class MemePanel extends AbstractContentPanel implements OnEditorActionLis
 		endEditView( topHv );
 		endEditView( bottomHv );
 
-		( (ImageViewDrawableOverlay) mImageView ).setOnDrawableEventListener( null );
-		( (ImageViewDrawableOverlay) mImageView ).setOnLayoutListener( null );
+		if (mImageView != null) {
+		    ( (ImageViewDrawableOverlay) mImageView ).setOnDrawableEventListener( null );
+		    ( (ImageViewDrawableOverlay) mImageView ).setOnLayoutListener( null );
+		}
 
-		editTopButton.setOnClickListener( null );
-		editBottomButton.setOnClickListener( null );
-		clearButtonTop.setOnClickListener( null );
-		clearButtonBottom.setOnClickListener( null );
+		if (editTopButton != null) editTopButton.setOnClickListener( null );
+		if (editBottomButton != null) editBottomButton.setOnClickListener( null );
+		if (clearButtonTop != null) clearButtonTop.setOnClickListener( null );
+		if (clearButtonBottom != null) clearButtonBottom.setOnClickListener( null );
 
 		if ( mInputManager.isActive( editTopText ) ) mInputManager.hideSoftInputFromWindow( editTopText.getWindowToken(), 0 );
 

@@ -207,6 +207,10 @@ public class TextPanel extends AbstractContentPanel implements OnDrawableEventLi
 		mEditTextWatcher.view = null;
 		mEditText.removeTextChangedListener( mEditTextWatcher );
 		mEditText.setOnKeyListener( null );
+		
+		if (mInputManager == null) {
+		    mInputManager = (InputMethodManager) getContext().getBaseContext().getSystemService( Context.INPUT_METHOD_SERVICE );
+		}
 		if ( mInputManager.isActive( mEditText ) ) mInputManager.hideSoftInputFromWindow( mEditText.getWindowToken(), 0 );
 	}
 
@@ -523,7 +527,7 @@ public class TextPanel extends AbstractContentPanel implements OnDrawableEventLi
 	 */
 	@Override
 	public void onDeactivate() {
-		( (ImageViewDrawableOverlay) mImageView ).setOnDrawableEventListener( null );
+		if (mImageView != null) ( (ImageViewDrawableOverlay) mImageView ).setOnDrawableEventListener( null );
 		endEdit( null );
 		super.onDeactivate();
 	}

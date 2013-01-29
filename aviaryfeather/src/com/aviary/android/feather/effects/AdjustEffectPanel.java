@@ -112,7 +112,7 @@ public class AdjustEffectPanel extends AbstractContentPanel implements OnClickLi
 	 */
 	@Override
 	public void onDeactivate() {
-		mView.setOnResetListener( null );
+	    if (mView != null) mView.setOnResetListener( null );
 		super.onDeactivate();
 	}
 
@@ -123,7 +123,7 @@ public class AdjustEffectPanel extends AbstractContentPanel implements OnClickLi
 	 */
 	@Override
 	public void onDestroy() {
-		mView.setImageBitmap( null );
+	    if (mView != null) mView.setImageBitmap( null );
 		super.onDestroy();
 	}
 

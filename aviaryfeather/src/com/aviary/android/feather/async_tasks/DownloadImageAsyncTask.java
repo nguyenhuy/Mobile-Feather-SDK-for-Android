@@ -94,7 +94,7 @@ public class DownloadImageAsyncTask extends AsyncTask<Context, Void, Bitmap> {
 		try {
 			final int max_size = Constants.getManagedMaxImageSize();
 			return DecodeUtils.decode( context, mUri, max_size, max_size, mImageSize );
-		} catch ( Exception e ) {
+		} catch ( Throwable e ) {
 			Logger logger = LoggerFactory.getLogger( "DownloadImageTask", LoggerType.ConsoleLoggerType );
 			logger.error( "error", e.getMessage() );
 			error = e.getMessage();
