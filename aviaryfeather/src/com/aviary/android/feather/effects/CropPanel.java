@@ -486,12 +486,19 @@ public class CropPanel extends AbstractContentPanel {
 	}
 
 	private String getString( String input ) {
-		int id = getContext().getBaseContext().getResources()
-				.getIdentifier( input, "string", getContext().getBaseContext().getPackageName() );
-		if ( id > 0 ) {
-			return getContext().getBaseContext().getResources().getString( id );
-		}
-		return input;
+	    EffectContext context = getContext();
+	    if (context != null) {
+	        // context can be null at AbstractEffectPanel.internalDispose()
+	        Context baseContext = context.getBaseContext();
+	        if (baseContext != null) {
+	            Resources resources = baseContext.getResources();
+	            int id = resources.getIdentifier( input, "string", baseContext.getPackageName() );
+	            if ( id > 0 ) {
+	                return resources.getString( id );
+	            }
+	        }
+	    }
+	    return input;
 	}
 
 	class GalleryAdapter extends BaseAdapter {
