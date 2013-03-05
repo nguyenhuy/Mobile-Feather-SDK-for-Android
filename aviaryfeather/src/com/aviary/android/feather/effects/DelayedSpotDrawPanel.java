@@ -645,8 +645,6 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
 						onProgressStart();
 					}
 
-					PointF firstPoint, lastPoint;
-
 					SpotBrushFilter filter = mQueue.peek();
                     if (filter == null) {
                         // The queue can return null when it's empty, after being
@@ -654,16 +652,25 @@ public class DelayedSpotDrawPanel extends AbstractContentPanel implements OnDraw
                         // We can just continue here. In the next loop, currentSize should be 0.
                         continue;
                     }
+                    
 					FlattenPath path = filter.getFlattenPath();
+					if (path == null) {
+					    continue;
+					}
 
-					firstPoint = path.remove();
+					PointF firstPoint = null;
 					while ( firstPoint == null && path.size() > 0 ) {
 						firstPoint = path.remove();
+					}
+					
+					if (firstPoint == null) {
+					    continue;
 					}
 
 					final int w = mPreview.getWidth();
 					final int h = mPreview.getHeight();
 
+					PointF lastPoint = null;
 					while ( path.size() > 0 ) {
 						lastPoint = path.remove();
 
