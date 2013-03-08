@@ -1009,8 +1009,10 @@ public final class FilterManager implements OnPreviewListener, OnApplyResultList
 						@Override
 						public void run() {
 							if ( null != mBitmapChangeListener ) mBitmapChangeListener.onClearColorFilter();
-							mContext.getDrawingImageContainer().removeAllViews();
-							mContext.deactivatePopupContainer();
+							if (mContext != null) {
+							    mContext.getDrawingImageContainer().removeAllViews();
+							    mContext.deactivatePopupContainer();
+							}
 						}
 					}, 100 );
 					break;
