@@ -1731,7 +1731,9 @@ public class BordersPanel extends AbstractContentPanel implements ViewFactory, O
 		protected void onPostExecute( List<EffectPack> result ) {
 			super.onPostExecute( result );
 
-			onEffectListUpdated( result, mErrors, mInstalledCount );
+			if (getContext() != null) {
+			    onEffectListUpdated( result, mErrors, mInstalledCount );
+			}
 			mIsAnimating = false;
 		}
 
